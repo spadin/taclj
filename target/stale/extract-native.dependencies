@@ -1,0 +1,1 @@
+([:dependencies ([org.clojure/clojure "1.4.0"] [joodo/joodo "1.1.2"] [speclj/speclj "2.5.0"])])
