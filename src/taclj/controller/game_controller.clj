@@ -31,4 +31,6 @@
       (redirect "/")))
 
   (GET "/game/:game-type/:x-player/:o-player/play" [game-type x-player o-player]
-    "Game page"))
+    (render-template "game/index" {:game-type game-type
+                                   :x-player x-player
+                                   :o-player o-player})))
