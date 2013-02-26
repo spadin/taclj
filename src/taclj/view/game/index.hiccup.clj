@@ -1,10 +1,11 @@
+(if (has-message?)
+  [:p (get-message)])
+
 [:div {:class "board-container"}
-  (if (= (:game-type *view-context*) "three-by-three")
-    (do
-      [:ul {:class (str "board board-type-" (:game-type *view-context*))}
+  (if (= (get-game-type) "three-by-three")
+      [:ul {:class (str "board board-type-" (get-game-type))}
         (for [i (range 9)]
-          [:li ""])])
-    (do
-      [:ul {:class (str "board board-type-" (:game-type *view-context*))}
+          [:li ""])]
+      [:ul {:class (str "board board-type-" (get-game-type))}
         (for [i (range 16)]
-          [:li ""])]))]
+          [:li ""])])]
