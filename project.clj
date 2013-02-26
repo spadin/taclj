@@ -10,10 +10,4 @@
   :test-paths ["spec/"]
   :java-source-paths ["src/"]
   :plugins [[speclj "2.5.0"]]
-
-  ; leiningen 1
-  :dev-dependencies [[speclj "2.5.0"]]
-  :test-path "spec/"
-  :java-source-path "src/"
-
-  )
+  :min-lein-version "2.0.0")
