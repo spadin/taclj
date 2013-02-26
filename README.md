@@ -8,9 +8,9 @@ Running specs
 
     $ lein spec
 
-Playing the game
+Start the Taclj server
 
-    $ lein run
+    $ lein joodo server
 
 
 [1]: http://github.com/spadin/ticlj
