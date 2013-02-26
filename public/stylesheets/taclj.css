@@ -1,8 +1,10 @@
 body {
     background: white;
     font-family: sans-serif;
-    width: 600px;
-    margin: 30px auto 0 auto;
+}
+
+div#start-game {
+  text-align: center;
 }
 
 form#new-game label {
@@ -12,5 +14,6 @@ form#new-game label {
 
 form#new-game input.submit {
   display: block;
+  margin: 0 auto;
   margin-top: 10px;
 }

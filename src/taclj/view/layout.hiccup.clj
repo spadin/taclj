@@ -6,5 +6,8 @@
   (include-css "/stylesheets/taclj.css")
   (include-js "/javascript/taclj.js")]
  [:body
+  [:h1 "Taclj"
+    [:em [:small "- tic tac toe"]]]
+
   (eval (:template-body joodo.views/*view-context*))
 ]]
