@@ -9,13 +9,13 @@
    :headers {}
    :body (render-template "not_found" :error error-msg)})
 
-(defn has-game-setup-params? []
+(defn- has-game-setup-params? []
   (and
     (not (empty? (:game-type (:params *request*))))
     (not (empty? (:x-player (:params *request*))))
     (not (empty? (:o-player (:params *request*))))))
 
-(defn game-route []
+(defn- game-route []
   (str "/game/"
        (:game-type (:params *request*))
        "/"
