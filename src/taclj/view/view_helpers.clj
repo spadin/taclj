@@ -6,7 +6,9 @@
     [hiccup.form]
     [ticlj.player]
     [ticlj.game]
-    [clojure.string :only [split]]))
+    [ticlj.game.protocol :only [empty-board-state]]
+    [clojure.string :only [split]]
+    [joodo.middleware.request :only (*request*)]))
 
 (defn get-game-type []
   (:game-type *view-context*))
@@ -15,6 +17,9 @@
   (map (fn [game-type]
          (assoc game-type :uri-value (second (split (:value game-type) #"\/"))))
        available-game-types))
+
+(defn get-board-str []
+  (:board-str *view-context*))
 
 (defn get-player-types []
   (map (fn [player-type]
@@ -26,3 +31,14 @@
 
 (defn get-message []
   (:message *view-context*))
+
+(defn dashes-to-underscore [s]
+  (clojure.string/replace s #"-" "_"))
+
+(defn get-board-partial [game-type-str]
+  (str "game/" (dashes-to-underscore game-type-str) "_board"))
+
+(defn state-or-move-link [idx state]
+  (if (= (str state) "-")
+    [:a {:href (str "move?choice=" idx "&board-str=" (get-board-str))} "choose"]
+    state))

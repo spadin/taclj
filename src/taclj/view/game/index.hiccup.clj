@@ -1,11 +1,12 @@
 (if (has-message?)
   [:p (get-message)])
 
+[:p
+ [:a {:href "/"} "Start over"]]
+
 [:div {:class "board-container"}
-  (if (= (get-game-type) "three-by-three")
-      [:ul {:class (str "board board-type-" (get-game-type))}
-        (for [i (range 9)]
-          [:li ""])]
-      [:ul {:class (str "board board-type-" (get-game-type))}
-        (for [i (range 16)]
-          [:li ""])])]
+  [:ul {:class (str "board board-type-" (get-game-type))}
+    (map-indexed
+      (fn [idx state]
+        [:li (state-or-move-link idx state)])
+      (get-board-str))]]

@@ -1,7 +1,8 @@
 (ns taclj.view.view-helpers-spec
   (:use [taclj.view.view-helpers]
         [speclj.core]
-        [joodo.views :only (*view-context*)]))
+        [joodo.views :only (*view-context*)]
+        [joodo.middleware.request :only (*request*)]))
 
 (describe "view_helpers"
   (context "/get-game-types"
@@ -36,5 +37,26 @@
     (should= nil (get-game-type)))
 
   (it "returns the game type"
-    (binding [*view-context* {:game-type "three-by-three"}]
-      (should= "three-by-three" (get-game-type)))))
+    (binding [*view-context* {:game-type "three-by-three-game"}]
+      (should= "three-by-three-game" (get-game-type))))
+
+  (it "returns the game board based on params"
+    (binding [*view-context* {:board-str "X--------"}]
+      (should= "X--------"
+               (get-board-str))))
+
+  (it "returns the board partial name"
+    (should= "game/three_by_three_game_board"
+             (get-board-partial "three-by-three-game")))
+
+  (it "converts dashes to underscores"
+    (should= "sample_string_cool_stuff"
+             (dashes-to-underscore "sample-string-cool-stuff")))
+
+  (it "returns the state when it is a move"
+    (should= "X"
+             (state-or-move-link 0 "X")))
+
+  (it "returns a link when the state is not a move"
+    (should-contain :a
+                    (state-or-move-link 0 "-"))))
