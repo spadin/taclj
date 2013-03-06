@@ -4,23 +4,23 @@
         [joodo.views :only (*view-context*)]))
 
 (describe "view_helpers"
-  (it "gets the possible game types"
-    (should= [{:name "3 x 3"
-               :uri-value "three-by-three"}
-              {:name "4 x 4"
-               :uri-value "four-by-four"}]
-             (get-game-types)))
+  (context "/get-game-types"
+    (it "contains a name key in the hash map"
+      (should-contain :name
+                      (first (get-game-types))))
 
-  (it "gets the possible player types"
-    (should= [{:name "Human"
-               :uri-value "human"}
-              {:name "UnbeatableAI"
-               :uri-value "unbeatable-ai"}
-              {:name "MediumAI"
-               :uri-value "medium-ai"}
-              {:name "EasyAI"
-               :uri-value "easy-ai"}]
-             (get-player-types)))
+    (it "contains a uri-value key in the hash map"
+      (should-contain :uri-value
+                      (first (get-game-types)))))
+
+  (context "/get-player-types"
+    (it "contains a name key in the hash map"
+      (should-contain :name
+                      (first (get-player-types))))
+
+    (it "contains a uri-value key in the hash map"
+      (should-contain :uri-value
+                      (first (get-player-types)))))
 
   (it "determines if there are any messages"
     (should-not (has-message?))
