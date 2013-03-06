@@ -1,6 +1,6 @@
 (defproject taclj "0.0.1"
   :description "A simple stand-alone webapp"
-  :dependencies [[org.clojure/clojure "1.4.0"]
+  :dependencies [[org.clojure/clojure "1.5.0"]
                  [joodo "1.1.2"]
                  [org.clojars.sandropadin/ticlj "0.1.0-SNAPSHOT"]]
 
