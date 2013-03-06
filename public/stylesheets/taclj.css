@@ -39,10 +39,10 @@ form#new-game input.submit {
   background-color: #fff;
 }
 
-.board-type-three-by-three li {
+.board-type-three-by-three-game li {
   width: 120px; height: 120px;
 }
 
-.board-type-four-by-four li {
+.board-type-four-by-four-game li {
   width: 90px; height: 90px;
 }
