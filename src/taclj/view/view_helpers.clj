@@ -41,4 +41,4 @@
 (defn state-or-move-link [idx state]
   (if (= (str state) "-")
     [:a {:href (str "move?choice=" idx "&board-str=" (get-board-str))} "choose"]
-    state))
+    [:span state]))

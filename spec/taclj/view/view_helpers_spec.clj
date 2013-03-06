@@ -54,7 +54,7 @@
              (dashes-to-underscore "sample-string-cool-stuff")))
 
   (it "returns the state when it is a move"
-    (should= "X"
+    (should= [:span "X"]
              (state-or-move-link 0 "X")))
 
   (it "returns a link when the state is not a move"
