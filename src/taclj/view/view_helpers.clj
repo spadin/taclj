@@ -38,7 +38,13 @@
 (defn get-board-partial [game-type-str]
   (str "game/" (dashes-to-underscore game-type-str) "_board"))
 
-(defn state-or-move-link [idx state]
+(defn state-or-move-link [interactive-move? idx state]
   (if (= (str state) "-")
-    [:a {:href (str "move?choice=" idx "&board-str=" (get-board-str))} "choose"]
+    (if interactive-move?
+      [:a {:href (str "move?choice=" idx)} "choose"]
+      [:span "&nbsp;"])
     [:span state]))
+
+(defn get-player-name [player-type-str]
+  (let [player-types (get-player-types)]
+    (:name (first (filter (fn [player-type] (= (:uri-value player-type) player-type-str)) player-types)))))

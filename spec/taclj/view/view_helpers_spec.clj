@@ -53,10 +53,20 @@
     (should= "sample_string_cool_stuff"
              (dashes-to-underscore "sample-string-cool-stuff")))
 
-  (it "returns the state when it is a move"
-    (should= [:span "X"]
-             (state-or-move-link 0 "X")))
+  (context "/state-or-mobe-link"
+    (it "returns the state when it is a move"
+      (should= [:span "X"]
+               (state-or-move-link true 0 "X")))
 
-  (it "returns a link when the state is not a move"
-    (should-contain :a
-                    (state-or-move-link 0 "-"))))
+    (it "returns a link when the state is not a move"
+      (should-contain :a
+                      (state-or-move-link true 0 "-")))
+
+    (it "returns a space when the next move is non-interactive"
+      (should= [:span "&nbsp;"]
+                      (state-or-move-link false 0 "-"))))
+
+  (context "/get-player-name"
+    (it "returns Human for a human-player type"
+      (should= "Human"
+               (get-player-name "human-player")))))

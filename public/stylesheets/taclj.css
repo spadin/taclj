@@ -19,7 +19,6 @@ div#start-game {
 }
 
 form#new-game label {
-  display: block;
   margin-top: 10px;
 }
 
@@ -27,6 +26,15 @@ form#new-game input.submit {
   display: block;
   margin: 0 auto;
   margin-top: 10px;
+}
+
+form#new-game .label-group {
+  padding-bottom: 10px;
+}
+
+form#new-game .label-group label {
+  padding-right: 10px;
+  line-height: 30px;
 }
 
 .board-container {
@@ -84,3 +92,48 @@ form#new-game input.submit {
   padding-top: 20px;
 }
 
+.players {
+  box-sizing: border-box;
+  width: 350px;
+  margin: 0 auto;
+  border: 1px solid #C7C7C7;
+  margin-bottom: 10px;
+}
+
+.players h2 {
+  text-align: center;
+  margin: 0;
+  border-bottom: 1px solid #c7c7c7;
+  padding: 5px;
+}
+
+.players span {
+  box-sizing: border-box;
+  text-align: center;
+  display: inline-block;
+  padding: 20px 10px;
+  width: 174px;
+}
+
+.players .X {
+  border-right: 1px solid #c7c7c7;
+}
+
+.players .current {
+  background-color: #d9d9d9;
+}
+
+.winning-message-holder {
+  width: 350px;
+  height: 40px;
+  margin: 0 auto;
+  padding-bottom: 10px;
+}
+
+.winning-message {
+  width: 348px;
+  height: 38px;
+  border: 1px solid #c7c7c7;
+  line-height: 38px;
+  text-align: center;
+}

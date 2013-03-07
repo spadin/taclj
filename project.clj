@@ -2,6 +2,7 @@
   :description "A simple stand-alone webapp"
   :dependencies [[org.clojure/clojure "1.5.0"]
                  [joodo "1.1.2"]
+                 [org.clojure/data.json "0.2.1"]
                  [org.clojars.sandropadin/ticlj "0.1.0-SNAPSHOT"]]
 
   :joodo-root-namespace taclj.root
