@@ -1,6 +1,8 @@
 body {
   background: #E6E6E6;
   font-family: sans-serif;
+  width: 800px;
+  margin: 0 auto;
 }
 
 h1.title {
@@ -12,6 +14,7 @@ a.new-game {
   text-align: center;
   padding-top: 20px;
   color: #00B3FA;
+  clear: both;
 }
 
 div#start-game {
@@ -98,6 +101,8 @@ form#new-game .label-group label {
   margin: 0 auto;
   border: 1px solid #C7C7C7;
   margin-bottom: 10px;
+  float: right;
+  clear: right;
 }
 
 .players h2 {
@@ -128,6 +133,8 @@ form#new-game .label-group label {
   height: 40px;
   margin: 0 auto;
   padding-bottom: 10px;
+  float: right;
+  clear: right;
 }
 
 .winning-message {
