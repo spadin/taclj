@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/spadin/taclj.png)](https://travis-ci.org/spadin/taclj)
+
 # Taclj
 
 ## Front-end interface to [Ticlj, a command-line Tic Tac Toe game][1]
