@@ -55,6 +55,7 @@ form#new-game .label-group label {
 
 .board li {
   display: inline-block;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
   float: left;
   border: 5px solid black;
@@ -96,6 +97,7 @@ form#new-game .label-group label {
 }
 
 .players {
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
   width: 350px;
   margin: 0 auto;
@@ -113,6 +115,7 @@ form#new-game .label-group label {
 }
 
 .players span {
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
   text-align: center;
   display: inline-block;
