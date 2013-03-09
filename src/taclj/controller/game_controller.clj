@@ -98,65 +98,69 @@
                           nil)]
     (if (nil? game-cookie-str) nil (keyify (json/read-str game-cookie-str)))))
 
-(defroutes game-controller
-  (POST "/game/create" []
-    (if (has-game-setup-params?)
-      (assoc
-        (redirect "/game/play")
-        :cookies (new-game-cookie))
-      (redirect "/")))
-
-  (GET "/game/move" []
-    (if-let [game-cookie (get-game-cookie *request*)]
-      (do
-        (let [game (get-game-of-uri-value (:game-type game-cookie))
-              board-state (convert-string-to-board-state (:board-str game-cookie))
-              player-str-coll {:X (:x-player game-cookie) :O (:o-player game-cookie)}
-              player-str (get player-str-coll (next-possible-mark game board-state))
-              player (get-player-of-uri-value player-str)
-              move (if-not (nil? (:choice (:params *request*)))
-                     (Integer/parseInt (:choice (:params *request*)))
-                     (move player game board-state))
-              new-board-state (set-mark-at-index game board-state move)
-              new-board-str (convert-board-state-to-string new-board-state)]
-          (assoc
-            (redirect "/game/play")
-            :cookies (apply
-                       game-cookie-map
-                       (vals (assoc
-                               game-cookie
-                               :board-str new-board-str))))))
-      (redirect "/")))
-
-  (GET "/game/play" []
-    (if-let [game-cookie (get-game-cookie *request*)]
-      (do
-        (let [game (get-game-of-uri-value (:game-type game-cookie))
-              board-state (convert-string-to-board-state (:board-str game-cookie))
-              gameover? (gameover? game board-state)
-              winner (winner game board-state)
-              player-str-coll {:X (:x-player game-cookie) :O (:o-player game-cookie)}
-              next-mark (next-possible-mark game board-state)
-              player-str (get player-str-coll next-mark)
-              meta-refresh (if (and (not gameover?) (not= "human-player" player-str)) {:seconds 1 :url "/game/move"} nil)
-              interactive-move? (if (and (not gameover?) (nil? meta-refresh)) true false)
-              winning-message (if (and gameover? winner)
-                                (str "Game over, " (name winner) " has won.")
-                                (if gameover?
-                                  (str "Game over, tied game")
-                                  nil))]
-          (render-template "game/index" game-cookie
-                                        :meta-refresh meta-refresh
-                                        :interactive-move? interactive-move?
-                                        :gameover? gameover?
-                                        :winner winner
-                                        :x-player (:x-player game-cookie)
-                                        :o-player (:o-player game-cookie)
-                                        :next-mark (if-not gameover? next-mark nil)
-                                        :winning-message winning-message)))
-      (redirect "/")))
-
-  (GET "/game/reset" []
+(defn handle-game-create []
+  (if (has-game-setup-params?)
     (assoc
-      (redirect "/")
-      :cookies {:game {:value ""}})))
+      (redirect "/game/play")
+      :cookies (new-game-cookie))
+    (redirect "/")))
+
+(defn handle-game-move []
+  (if-let [game-cookie (get-game-cookie *request*)]
+    (do
+      (let [game (get-game-of-uri-value (:game-type game-cookie))
+            board-state (convert-string-to-board-state (:board-str game-cookie))
+            player-str-coll {:X (:x-player game-cookie) :O (:o-player game-cookie)}
+            player-str (get player-str-coll (next-possible-mark game board-state))
+            player (get-player-of-uri-value player-str)
+            move (if-not (nil? (:choice (:params *request*)))
+                   (Integer/parseInt (:choice (:params *request*)))
+                   (move player game board-state))
+            new-board-state (set-mark-at-index game board-state move)
+            new-board-str (convert-board-state-to-string new-board-state)]
+        (assoc
+          (redirect "/game/play")
+          :cookies (apply
+                     game-cookie-map
+                     (vals (assoc
+                             game-cookie
+                             :board-str new-board-str))))))
+    (redirect "/")))
+
+(defn handle-game-play []
+  (if-let [game-cookie (get-game-cookie *request*)]
+    (let [game (get-game-of-uri-value (:game-type game-cookie))
+          board-state (convert-string-to-board-state (:board-str game-cookie))
+          gameover? (gameover? game board-state)
+          winner (winner game board-state)
+          player-str-coll {:X (:x-player game-cookie) :O (:o-player game-cookie)}
+          next-mark (next-possible-mark game board-state)
+          player-str (get player-str-coll next-mark)
+          meta-refresh (if (and (not gameover?) (not= "human-player" player-str)) {:seconds 1 :url "/game/move"} nil)
+          interactive-move? (if (and (not gameover?) (nil? meta-refresh)) true false)
+          winning-message (if (and gameover? winner)
+                            (str "Game over, " (name winner) " has won.")
+                            (if gameover?
+                              (str "Game over, tied game")
+                              nil))]
+      (render-template "game/index" game-cookie
+                                    :meta-refresh meta-refresh
+                                    :interactive-move? interactive-move?
+                                    :gameover? gameover?
+                                    :winner winner
+                                    :x-player (:x-player game-cookie)
+                                    :o-player (:o-player game-cookie)
+                                    :next-mark (if-not gameover? next-mark nil)
+                                    :winning-message winning-message))
+    (redirect "/")))
+
+(defn handle-game-reset []
+  (assoc
+    (redirect "/")
+    :cookies {:game {:value ""}}))
+
+(defroutes game-controller
+  (POST "/game/create" [] (handle-game-create))
+  (GET  "/game/move"   [] (handle-game-move))
+  (GET  "/game/play"   [] (handle-game-play))
+  (GET  "/game/reset"  [] (handle-game-reset)))
