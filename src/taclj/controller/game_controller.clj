@@ -110,13 +110,14 @@
     (do
       (let [game (get-game-of-uri-value (:game-type game-cookie))
             board-state (convert-string-to-board-state (:board-str game-cookie))
+            gameover? (gameover? game board-state)
             player-str-coll {:X (:x-player game-cookie) :O (:o-player game-cookie)}
             player-str (get player-str-coll (next-possible-mark game board-state))
             player (get-player-of-uri-value player-str)
             move (if-not (nil? (:choice (:params *request*)))
                    (Integer/parseInt (:choice (:params *request*)))
                    (move player game board-state))
-            new-board-state (set-mark-at-index game board-state move)
+            new-board-state (if gameover? board-state (set-mark-at-index game board-state move))
             new-board-str (convert-board-state-to-string new-board-state)]
         (assoc
           (redirect "/game/play")
